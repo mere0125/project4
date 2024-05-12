@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Cat Generator</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Add styles for the cat image */
+    #catImage {
+      width: 300px; /* Adjust width as needed */
+      height: auto; /* Maintain aspect ratio */
+    }
+  </style>
+</head>
+<body>
+  <button id="generateBtn" onclick="fetchRandomCat()">
+    <img src="assets/pic icon.jpeg" alt="Generate Random Cat">
+  </button>
+  <div id="catContainer"></div>
+
+  <script>
+    function fetchRandomCat() {
+      // Fetch a random cat image
+      fetch('https://api.thecatapi.com/v1/images/search')
+        .then(response => response.json())
+        .then(data => {
+          const catUrl = data[0].url;
+          displayCat(catUrl);
+        })
+        .catch(error => console.error('Error fetching random cat:', error));
+    }
+
+    function displayCat(catUrl) {
+      // Create an image element and set its source to the fetched cat URL
+      const img = document.createElement('img');
+      img.src = catUrl;
+      img.id = 'catImage'; // Add an id for styling purposes
+      // Clear previous cat images
+      const catContainer = document.getElementById('catContainer');
+      catContainer.innerHTML = '';
+      // Append the new cat image to the container
+      catContainer.appendChild(img);
+    }
+  </script>
+</body>
+</html>
